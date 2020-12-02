@@ -33,6 +33,7 @@ struct ContentView: View {
         // if inputImage has a value, assign a new image to the image property
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
+        UIImageWriteToSavedPhotosAlbum(inputImage, nil, nil, nil)
     }
 }
 
