@@ -18,9 +18,19 @@ struct ContentView: View {
     // context is an object responsible for rendering a CIImage to a CGImage
     // They're expensive to make, so make one and keep it alive
     let context = CIContext()
-
+    
     var body: some View {
-        NavigationView {
+        let intensity = Binding<Double>(
+            get: {
+                self.filterIntensity
+            },
+            set: {
+                self.filterIntensity = $0
+                self.applyProcessing()
+            }
+        )
+        
+        return NavigationView {
             VStack {
                 ZStack {
                     Rectangle()
@@ -42,7 +52,8 @@ struct ContentView: View {
                 
                 HStack {
                     Text("Intensity")
-                    Slider(value: self.$filterIntensity)
+                    // Note: This will be *very* slow on a simulator
+                    Slider(value: intensity)
                 }
                 .padding(.vertical)
                 
