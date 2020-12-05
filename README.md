@@ -1,4 +1,4 @@
-# Moonshot
+# Instafilter
 
 An iOS app that lets you select a photo from your camera roll and apply a filter to it. 
 Seven filters available, with options to adjust filter parameters.
