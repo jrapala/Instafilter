@@ -17,6 +17,9 @@ struct ContentView: View {
     @State private var currentFilter: CIFilter = CIFilter.sepiaTone()
     @State private var showingFilterSheet = false
     @State private var processedImage: UIImage?
+    @State private var showAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
     
     // context is an object responsible for rendering a CIImage to a CGImage
     // They're expensive to make, so make one and keep it alive
@@ -73,10 +76,15 @@ struct ContentView: View {
                         let imageSaver = ImageSaver()
                         
                         imageSaver.successHandler = {
-                            print("Success!")
+                            self.showAlert = true
+                            self.alertTitle = "Success!"
+                            self.alertMessage = "Image has been saved."
                         }
 
                         imageSaver.errorHandler = {
+                            self.showAlert = true
+                            self.alertTitle = "Error"
+                            self.alertMessage = "There has been a problem savings your image."
                             print("Oops: \($0.localizedDescription)")
                         }
 
@@ -101,6 +109,9 @@ struct ContentView: View {
                     .cancel()
                 ])
                 
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
         }
     }
